@@ -150,13 +150,15 @@ def add_product():
     while quantity_error:
         quantity = input('Quantity: ')
         quantity_checked = check_quantity(quantity)
-        if type(quantity_checked) == int:
+        # Use isinstance(obj, int) instead of type(obj) == int for performance
+        # REF: https://switowski.com/blog/type-vs-isinstance
+        if isinstance(quantity_checked, int):
             quantity_error = False
     price_error = True
     while price_error:
         price = input('Price: (Ex: 12.99): ')
         price_cleaned = clean_price(price)
-        if type(price_cleaned) == int:
+        if isinstance(price_cleaned, int):
             price_error = False
     # If a duplicate product_name is found while attempting to a add a product,
     # save the updated data to the existing product.
@@ -194,7 +196,7 @@ def view_product():
         id_str = input(
             f"Enter a product's ID number: ({id_options[0]}-{id_options[-1]}): ")
         id_cleaned = check_id(id_str, id_options)
-        if type(id_cleaned) == int:
+        if isinstance(id_cleaned, int):
             id_error = False
     the_product = session.query(Product).filter_by(
         product_id=id_cleaned).one_or_none()
