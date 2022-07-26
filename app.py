@@ -121,13 +121,37 @@ def check_id(id_str, id_options):
             return
 
 
+def check_quantity(qty):
+    """Check if quantity is an integer.
+
+    Args:
+        qty (_type_): The value to check.
+    """
+    try:
+        qty_int = int(qty)
+    except ValueError:
+        input('''
+              \n***** QUANTITY ERROR *****
+              \rThe quantity should be a number.
+              \rExample: 100
+              \rPress enter to try again.''')
+        return
+    else:
+        return qty_int
+
+
 def add_product():
     """Add a new product to the database."""
     print('-'*50)
     print('ADD NEW PRODUCT'.center(50))
     print('-'*50)
     name = input('Name: ')
-    quantity = input('Quantity: ')
+    quantity_error = True
+    while quantity_error:
+        quantity = input('Quantity: ')
+        quantity_checked = check_quantity(quantity)
+        if type(quantity_checked) == int:
+            quantity_error = False
     price_error = True
     while price_error:
         price = input('Price: (Ex: 12.99): ')
@@ -139,15 +163,15 @@ def add_product():
     product_in_db = session.query(Product).filter_by(
         product_name=name).one_or_none()
     if product_in_db:
-        product_in_db.product_quantity = quantity
+        product_in_db.product_quantity = quantity_checked
         product_in_db.product_price = price_cleaned
         product_in_db.date_updated = datetime.now()
         print(f'\n{name} has been updated in the database.')
     else:
-        print(f'\n{name} {quantity} {humanize_price(price_cleaned)}')
+        print(f'\n{name} {quantity_checked} {humanize_price(price_cleaned)}')
         confirm = input('Is this correct? (y/n): ').lower()
         if confirm == 'y':
-            new_product = Product(product_name=name, product_quantity=quantity,
+            new_product = Product(product_name=name, product_quantity=quantity_checked,
                                   product_price=price_cleaned, date_updated=datetime.now())
             session.add(new_product)
             session.commit()
@@ -270,7 +294,7 @@ def add_csv():
                     # Use the dictionary keys to assign values to the
                     # corresponding columns in the database.
                     product_name=row['product_name'],
-                    product_quantity=row['product_quantity'],
+                    product_quantity=int(row['product_quantity']),
                     product_price=clean_price(row['product_price']),
                     date_updated=clean_date(row['date_updated']))
                 session.add(new_product)
