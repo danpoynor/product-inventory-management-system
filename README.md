@@ -6,6 +6,16 @@ This app uses my knowledge of CSV, File I/O, and database ORMs to create a produ
 
 ---
 
+## Technology Used
+
+- [Python](https://www.python.org/) Programming language that lets you work quickly
+and integrate systems more effectively. ([docs](https://docs.python.org/3/))
+- [SQLAlchemy](https://www.sqlalchemy.org/) The Python SQL Toolkit and Object Relational Mapper ([docs](https://docs.sqlalchemy.org/en/latest/))
+- [SQLite](https://www.sqlite.org/) The most used database engine in the world. ([docs](https://www.sqlite.org/docs.html))
+- [CSV](https://en.wikipedia.org/wiki/Comma-separated_values) file format used for storing imported and exported data in a human readable including a header row of field names.
+
+---
+
 ## Run the app
 
 Clone this repo then `cd product-inventory-management-system`.
@@ -20,15 +30,6 @@ python app.py
 ```
 
 When done running the app, you can deactivate the virtual environment by running `deactivate`.
-
----
-
-## Technology Used
-
-- [Python](https://www.python.org/) Programming language that lets you work quickly
-and integrate systems more effectively. ([docs](https://docs.python.org/3/))
-- [SQLAlchemy](https://www.sqlalchemy.org/) The Python SQL Toolkit and Object Relational Mapper ([docs](https://docs.sqlalchemy.org/en/latest/))
-- [SQLite](https://www.sqlite.org/) The most used database engine in the world. ([docs](https://www.sqlite.org/docs.html))
 
 ---
 
